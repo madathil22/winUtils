@@ -1,0 +1,443 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WinUtils Disk Cleaner"
+        Height="820" Width="1280" MinHeight="600" MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF15161A"
+        TextOptions.TextFormattingMode="Display"
+        FontFamily="Segoe UI" FontSize="12">
+
+  <Window.Resources>
+    <SolidColorBrush x:Key="Bg" Color="#FF15161A"/>
+    <SolidColorBrush x:Key="Panel" Color="#FF1D1F26"/>
+    <SolidColorBrush x:Key="PanelAlt" Color="#FF23262F"/>
+    <SolidColorBrush x:Key="Line" Color="#FF32363F"/>
+    <SolidColorBrush x:Key="Fg" Color="#FFE7E9EE"/>
+    <SolidColorBrush x:Key="Muted" Color="#FF9199A6"/>
+    <SolidColorBrush x:Key="Accent" Color="#FF4C8DF6"/>
+    <SolidColorBrush x:Key="AccentDim" Color="#FF2B5FA8"/>
+    <SolidColorBrush x:Key="Danger" Color="#FFE0574F"/>
+    <SolidColorBrush x:Key="Warn" Color="#FFE0A24F"/>
+    <SolidColorBrush x:Key="Good" Color="#FF4FBF7B"/>
+
+    <Style TargetType="TextBlock">
+      <Setter Property="Foreground" Value="{StaticResource Fg}"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="Muted2" TargetType="TextBlock">
+      <Setter Property="Foreground" Value="{StaticResource Muted}"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="Button">
+      <Setter Property="Foreground" Value="{StaticResource Fg}"/>
+      <Setter Property="Background" Value="{StaticResource PanelAlt}"/>
+      <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+      <Setter Property="Padding" Value="12,5"/>
+      <Setter Property="Margin" Value="0,0,6,0"/>
+      <Setter Property="SnapsToDevicePixels" Value="True"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="bd" CornerRadius="4" Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Margin="{TemplateBinding Padding}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#FF32363F"/>
+              </Trigger>
+              <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#FF3D424D"/>
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="bd" Property="Opacity" Value="0.4"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+      <Setter Property="Background" Value="{StaticResource AccentDim}"/>
+      <Setter Property="BorderBrush" Value="{StaticResource Accent}"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+
+    <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+      <Setter Property="Background" Value="#FF5A2A28"/>
+      <Setter Property="BorderBrush" Value="{StaticResource Danger}"/>
+    </Style>
+
+    <Style TargetType="CheckBox">
+      <Setter Property="Foreground" Value="{StaticResource Fg}"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="TextBox">
+      <Setter Property="Background" Value="{StaticResource PanelAlt}"/>
+      <Setter Property="Foreground" Value="{StaticResource Fg}"/>
+      <Setter Property="CaretBrush" Value="{StaticResource Fg}"/>
+      <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Padding" Value="6,4"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="ProgressBar">
+      <Setter Property="Background" Value="{StaticResource PanelAlt}"/>
+      <Setter Property="Foreground" Value="{StaticResource Accent}"/>
+      <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+    </Style>
+
+    <Style TargetType="ComboBox">
+      <Setter Property="Foreground" Value="#FF101216"/>
+      <Setter Property="Height" Value="26"/>
+    </Style>
+
+    <Style TargetType="TabItem">
+      <Setter Property="Foreground" Value="{StaticResource Muted}"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="TabItem">
+            <Border x:Name="bd" Background="Transparent" BorderThickness="0,0,0,2"
+                    BorderBrush="Transparent" Padding="16,8" Margin="0,0,2,0">
+              <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsSelected" Value="True">
+                <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource Accent}"/>
+                <Setter TargetName="bd" Property="Background" Value="{StaticResource Panel}"/>
+                <Setter Property="Foreground" Value="{StaticResource Fg}"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+              </Trigger>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#FF23262F"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style TargetType="TabControl">
+      <Setter Property="Background" Value="{StaticResource Bg}"/>
+      <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <Style TargetType="GridViewColumnHeader">
+      <Setter Property="Foreground" Value="{StaticResource Muted}"/>
+      <Setter Property="Background" Value="{StaticResource PanelAlt}"/>
+      <Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="Padding" Value="8,5"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="GridViewColumnHeader">
+            <Border Background="{TemplateBinding Background}" BorderBrush="{StaticResource Line}"
+                    BorderThickness="0,0,1,1">
+              <ContentPresenter Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="Center"/>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style TargetType="ListView">
+      <Setter Property="Background" Value="{StaticResource Panel}"/>
+      <Setter Property="Foreground" Value="{StaticResource Fg}"/>
+      <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+      <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <Style TargetType="ListViewItem">
+      <Setter Property="Foreground" Value="{StaticResource Fg}"/>
+      <Setter Property="Padding" Value="4,3"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="ListViewItem">
+            <Border x:Name="bd" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FF23262F">
+              <GridViewRowPresenter VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#FF23262F"/>
+              </Trigger>
+              <Trigger Property="IsSelected" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="{StaticResource AccentDim}"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style TargetType="TreeView">
+      <Setter Property="Background" Value="{StaticResource Panel}"/>
+      <Setter Property="Foreground" Value="{StaticResource Fg}"/>
+      <Setter Property="BorderBrush" Value="{StaticResource Line}"/>
+      <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <Style TargetType="TreeViewItem">
+      <Setter Property="Foreground" Value="{StaticResource Fg}"/>
+      <Setter Property="Padding" Value="0,1"/>
+    </Style>
+
+    <HierarchicalDataTemplate x:Key="NodeTemplate" ItemsSource="{Binding Children}">
+      <StackPanel Orientation="Horizontal" Height="20">
+        <TextBlock Text="{Binding SizeText}" Width="78" TextAlignment="Right"
+                   FontFamily="Consolas" Foreground="#FFBFD4F5"/>
+        <Border Width="112" Height="9" Margin="10,0,8,0" Background="#FF2A2E38" CornerRadius="2"
+                VerticalAlignment="Center">
+          <Rectangle Width="{Binding BarWidth}" HorizontalAlignment="Left" RadiusX="2" RadiusY="2">
+            <Rectangle.Fill>
+              <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Color="#FF4C8DF6" Offset="0"/>
+                <GradientStop Color="#FF7B5CF0" Offset="1"/>
+              </LinearGradientBrush>
+            </Rectangle.Fill>
+          </Rectangle>
+        </Border>
+        <TextBlock Text="{Binding PercentText}" Width="48" TextAlignment="Right"
+                   FontFamily="Consolas" Foreground="#FF9199A6" Margin="0,0,12,0"/>
+        <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
+        <TextBlock Text="{Binding Detail}" Foreground="#FF6E7683" Margin="10,0,0,0" FontSize="11"/>
+      </StackPanel>
+    </HierarchicalDataTemplate>
+  </Window.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <!-- Toolbar -->
+    <Border Grid.Row="0" Background="{StaticResource Panel}" BorderBrush="{StaticResource Line}"
+            BorderThickness="0,0,0,1" Padding="12,10">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Horizontal">
+          <TextBlock Text="WinUtils" FontSize="15" FontWeight="Bold" Foreground="{StaticResource Accent}"
+                     Margin="0,0,4,0"/>
+          <TextBlock Text="Disk Cleaner" FontSize="15" FontWeight="Light" Margin="0,0,20,0"/>
+          <TextBlock Text="Drive" Style="{StaticResource Muted2}" Margin="0,0,8,0"/>
+          <ComboBox x:Name="cboDrive" Width="230" Margin="0,0,10,0"/>
+          <Button x:Name="btnScan" Content="Scan" Style="{StaticResource PrimaryButton}" MinWidth="90"/>
+          <Button x:Name="btnStop" Content="Stop" IsEnabled="False" MinWidth="70"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="24,0,0,0">
+          <ProgressBar x:Name="pbScan" Width="170" Height="6" Visibility="Hidden" IsIndeterminate="True"/>
+          <TextBlock x:Name="txtScanStatus" Margin="12,0,0,0" Style="{StaticResource Muted2}"
+                     TextTrimming="CharacterEllipsis"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Orientation="Horizontal">
+          <CheckBox x:Name="chkRecycle" Content="Send deletions to Recycle Bin" IsChecked="True"/>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Elevation banner -->
+    <Border x:Name="bannerAdmin" Grid.Row="1" Background="#FF3B2E17" BorderBrush="{StaticResource Warn}"
+            BorderThickness="0,0,0,1" Padding="12,7" Visibility="Collapsed">
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="Not running as Administrator." FontWeight="SemiBold" Foreground="{StaticResource Warn}"/>
+        <TextBlock Text="System folders will show as inaccessible and system caches cannot be cleaned."
+                   Margin="8,0,16,0" Style="{StaticResource Muted2}"/>
+        <Button x:Name="btnElevate" Content="Restart as Administrator" Padding="10,3"/>
+      </StackPanel>
+    </Border>
+
+    <TabControl x:Name="tabs" Grid.Row="2" Margin="10,8,10,0">
+
+      <!-- ================= Folders ================= -->
+      <TabItem Header="Folder sizes">
+        <Grid Margin="0,8,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="330"/>
+          </Grid.ColumnDefinitions>
+
+          <TreeView x:Name="treeFolders" Grid.Column="0"
+                    ItemTemplate="{StaticResource NodeTemplate}"
+                    VirtualizingStackPanel.IsVirtualizing="True"
+                    VirtualizingStackPanel.VirtualizationMode="Recycling"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+
+          <Border Grid.Column="1" Margin="10,0,0,0" Background="{StaticResource Panel}"
+                  BorderBrush="{StaticResource Line}" BorderThickness="1" Padding="14">
+            <StackPanel>
+              <TextBlock Text="SELECTED FOLDER" FontSize="10" FontWeight="Bold"
+                         Foreground="{StaticResource Muted}" Margin="0,0,0,10"/>
+              <TextBlock x:Name="txtSelName" Text="Nothing selected" FontSize="14" FontWeight="SemiBold"
+                         TextWrapping="Wrap" Margin="0,0,0,6"/>
+              <TextBlock x:Name="txtSelPath" Text="" Foreground="{StaticResource Muted}"
+                         TextWrapping="Wrap" FontFamily="Consolas" FontSize="11" Margin="0,0,0,12"/>
+
+              <Border Background="{StaticResource PanelAlt}" CornerRadius="4" Padding="10" Margin="0,0,0,14">
+                <StackPanel>
+                  <TextBlock x:Name="txtSelSize" Text="-" FontSize="22" FontWeight="Bold"
+                             Foreground="{StaticResource Accent}"/>
+                  <TextBlock x:Name="txtSelDetail" Text="" Foreground="{StaticResource Muted}" Margin="0,4,0,0"/>
+                  <TextBlock x:Name="txtSelPct" Text="" Foreground="{StaticResource Muted}" Margin="0,2,0,0"/>
+                </StackPanel>
+              </Border>
+
+              <Button x:Name="btnOpenFolder" Content="Open in Explorer" HorizontalAlignment="Stretch"
+                      Margin="0,0,0,6" IsEnabled="False"/>
+              <Button x:Name="btnCopyPath" Content="Copy path" HorizontalAlignment="Stretch"
+                      Margin="0,0,0,6" IsEnabled="False"/>
+              <Button x:Name="btnDeleteFolder" Content="Delete this folder" Style="{StaticResource DangerButton}"
+                      HorizontalAlignment="Stretch" Margin="0,0,0,6" IsEnabled="False"/>
+
+              <TextBlock Text="Tip: expand the tree to follow the biggest bars down to whatever is eating your drive."
+                         Foreground="{StaticResource Muted}" TextWrapping="Wrap" FontSize="11" Margin="0,14,0,0"/>
+            </StackPanel>
+          </Border>
+        </Grid>
+      </TabItem>
+
+      <!-- ================= Big files ================= -->
+      <TabItem Header="Biggest files">
+        <DockPanel Margin="0,8,0,0">
+          <Border DockPanel.Dock="Top" Background="{StaticResource Panel}" BorderBrush="{StaticResource Line}"
+                  BorderThickness="1,1,1,0" Padding="10,8">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Filter" Style="{StaticResource Muted2}" Margin="0,0,8,0"/>
+              <TextBox x:Name="txtFileFilter" Width="240" Margin="0,0,12,0"/>
+              <Button x:Name="btnOpenFileLoc" Content="Open location" IsEnabled="False"/>
+              <Button x:Name="btnDeleteFiles" Content="Delete selected" Style="{StaticResource DangerButton}"
+                      IsEnabled="False"/>
+              <TextBlock x:Name="txtFilesInfo" Margin="16,0,0,0" Style="{StaticResource Muted2}"/>
+            </StackPanel>
+          </Border>
+          <ListView x:Name="lstFiles" SelectionMode="Extended">
+            <ListView.View>
+              <GridView>
+                <GridViewColumn Header="Size" Width="100">
+                  <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding SizeText}" TextAlignment="Right" Width="82"
+                                 FontFamily="Consolas" Foreground="#FFBFD4F5"/>
+                    </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Modified" Width="105" DisplayMemberBinding="{Binding ModifiedText}"/>
+                <GridViewColumn Header="Name" Width="330" DisplayMemberBinding="{Binding Name}"/>
+                <GridViewColumn Header="Folder" Width="600" DisplayMemberBinding="{Binding Folder}"/>
+              </GridView>
+            </ListView.View>
+          </ListView>
+        </DockPanel>
+      </TabItem>
+
+      <!-- ================= Junk ================= -->
+      <TabItem Header="Junk and caches">
+        <DockPanel Margin="0,8,0,0">
+          <Border DockPanel.Dock="Top" Background="{StaticResource Panel}" BorderBrush="{StaticResource Line}"
+                  BorderThickness="1,1,1,0" Padding="10,8">
+            <StackPanel Orientation="Horizontal">
+              <Button x:Name="btnMeasureJunk" Content="Measure sizes"/>
+              <Button x:Name="btnSelectSafe" Content="Select all safe"/>
+              <Button x:Name="btnSelectNone" Content="Clear selection"/>
+              <Button x:Name="btnCleanJunk" Content="Clean selected" Style="{StaticResource DangerButton}"
+                      MinWidth="130"/>
+              <TextBlock x:Name="txtJunkInfo" Margin="16,0,0,0" Style="{StaticResource Muted2}"/>
+            </StackPanel>
+          </Border>
+          <ListView x:Name="lstJunk">
+            <ListView.View>
+              <GridView>
+                <GridViewColumn Width="36">
+                  <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                      <CheckBox IsChecked="{Binding Selected, Mode=TwoWay}"
+                                IsEnabled="{Binding Deletable}" HorizontalAlignment="Center"/>
+                    </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Size" Width="100">
+                  <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding SizeText}" TextAlignment="Right" Width="82"
+                                 FontFamily="Consolas" Foreground="#FFBFD4F5"/>
+                    </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Location" Width="250" DisplayMemberBinding="{Binding Name}"/>
+                <GridViewColumn Header="Risk" Width="80" DisplayMemberBinding="{Binding Risk}"/>
+                <GridViewColumn Header="Contents" Width="130" DisplayMemberBinding="{Binding Detail}"/>
+                <GridViewColumn Header="What this is" Width="520" DisplayMemberBinding="{Binding Description}"/>
+              </GridView>
+            </ListView.View>
+          </ListView>
+        </DockPanel>
+      </TabItem>
+
+      <!-- ================= Programs ================= -->
+      <TabItem Header="Installed programs">
+        <DockPanel Margin="0,8,0,0">
+          <Border DockPanel.Dock="Top" Background="{StaticResource Panel}" BorderBrush="{StaticResource Line}"
+                  BorderThickness="1,1,1,0" Padding="10,8">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Filter" Style="{StaticResource Muted2}" Margin="0,0,8,0"/>
+              <TextBox x:Name="txtProgFilter" Width="240" Margin="0,0,12,0"/>
+              <Button x:Name="btnRefreshProgs" Content="Refresh"/>
+              <Button x:Name="btnMeasureProgs" Content="Measure real sizes"/>
+              <Button x:Name="btnUninstall" Content="Uninstall selected" Style="{StaticResource DangerButton}"
+                      IsEnabled="False" MinWidth="140"/>
+              <TextBlock x:Name="txtProgInfo" Margin="16,0,0,0" Style="{StaticResource Muted2}"/>
+            </StackPanel>
+          </Border>
+          <ListView x:Name="lstPrograms">
+            <ListView.View>
+              <GridView>
+                <GridViewColumn Header="Size" Width="100">
+                  <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding SizeText}" TextAlignment="Right" Width="82"
+                                 FontFamily="Consolas" Foreground="#FFBFD4F5"/>
+                    </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Program" Width="380" DisplayMemberBinding="{Binding Name}"/>
+                <GridViewColumn Header="Publisher" Width="240" DisplayMemberBinding="{Binding Publisher}"/>
+                <GridViewColumn Header="Version" Width="130" DisplayMemberBinding="{Binding Version}"/>
+                <GridViewColumn Header="Installed" Width="100" DisplayMemberBinding="{Binding InstallDate}"/>
+                <GridViewColumn Header="Scope" Width="90" DisplayMemberBinding="{Binding Scope}"/>
+              </GridView>
+            </ListView.View>
+          </ListView>
+        </DockPanel>
+      </TabItem>
+    </TabControl>
+
+    <!-- Status bar -->
+    <Border Grid.Row="3" Background="{StaticResource Panel}" BorderBrush="{StaticResource Line}"
+            BorderThickness="0,1,0,0" Padding="12,7" Margin="0,8,0,0">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="txtStatus" Grid.Column="0" Text="Ready." Style="{StaticResource Muted2}"
+                   TextTrimming="CharacterEllipsis"/>
+        <TextBlock x:Name="txtDriveInfo" Grid.Column="1" Text="" Style="{StaticResource Muted2}"/>
+      </Grid>
+    </Border>
+  </Grid>
+</Window>
